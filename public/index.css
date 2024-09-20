@@ -1,7 +1,19 @@
 .main {
-  background-color: blanchedalmond;
+  background-color: rgb(208, 131, 16);
   display: flex;
   justify-content: center;
+}
+
+.innerBox {
+  width: 50vw;
+  min-height: 50vh;
+  border-radius: 3rem;
+  margin: 5rem;
+  background-color: bisque;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .noterow {

@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     $("body").empty(); // Clear the body
     $("body").append(`
-            <div>
+            <div class="login">
             <h2>Login</h2>
             <form id="loginForm">
                 <label for="email">Email:</label><br>
@@ -65,7 +65,7 @@ $(document).ready(function () {
   function initRegistrationPage() {
     $("body").empty(); // Clear the body
     $("body").append(`
-            <div>
+            <div class="innerBox">
             <h2>Register</h2>
             <form id="registrationForm">
                 <label for="newEmail">Email:</label><br>
@@ -124,7 +124,7 @@ $(document).ready(function () {
         notes = res.data;
         $("body").empty();
         $("body").append(`
-                <div>
+                <div class="innerBox">
                 <h2 id="notesPageHeader">Welcome ${user.email}</h2>
                 <button id="logout">Logout</button>
                 <h3>Create a new note</h3>
