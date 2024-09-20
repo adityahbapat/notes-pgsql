@@ -1,6 +1,8 @@
 $(document).ready(function () {
   const token = localStorage.getItem("token");
 
+  // check server.js file for api endpoints
+
   if (token) {
     // Validate the token by fetching the notes
     initNotesPage();
@@ -42,7 +44,6 @@ $(document).ready(function () {
           success: function (response) {
             // console.log("res:", response);
             localStorage.setItem("token", response.token);
-            // alert("Login successful!");
             initNotesPage();
           },
           error: function () {
@@ -148,16 +149,14 @@ $(document).ready(function () {
 
             $.ajax({
               type: "POST",
-              url: "/notes", // API endpoint to add a new note
+              url: "/notes",
               headers: { Authorization: token }, // Send token in the Authorization header
               contentType: "application/json", // Set content type to JSON
               data: JSON.stringify({ content: noteContent }), // Send the note content as JSON
               success: function (newNote) {
                 notes.unshift(newNote.data);
                 displayNotes(notes); // Refresh notes list
-                // Append the new note to the notes list
-                // $("#notesList").append(`<p>${newNote.content}</p>`);
-                $("#noteContent").val(""); // Clear the textarea
+                $("#noteContent").val(""); 
               },
               error: function (xhr) {
                 alert(
@@ -215,8 +214,7 @@ $(document).ready(function () {
           // Remove the note from the DOM
           $(`#note-${noteId}`).remove();
         //   console.log(`Note ${noteId} deleted`);
-  
-          // Optionally re-fetch and re-display notes after deletion
+
           initNotesPage();
         },
         error: function (xhr) {
