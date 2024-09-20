@@ -1,5 +1,24 @@
 .main {
-    background-color: blanchedalmond;
-    display: flex;
-    justify-content: center;
+  background-color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+}
+
+.noterow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-style: solid;
+  border-radius: 1rem;
+  border-width: 1px;
+  border-color: chocolate;
+  padding: 10px;
+  margin: 10px;
+  height: 5rem;
+  width: 15rem;
+}
+
+.deleteNote {
+    height: 50px;
 }

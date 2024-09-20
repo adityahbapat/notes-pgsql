@@ -121,6 +121,26 @@ app.get("/notes", authenticateToken, async (req, res) => {
   }
 });
 
+// Delete a note
+app.delete('/notes/:id', authenticateToken, async (req, res) => {
+  const noteId = req.params.id;
+
+  try {
+      const result = await pool.query(
+          'DELETE FROM notes WHERE id = $1 AND user_id = $2',
+          [noteId, req.user.userId]
+      );
+
+      if (result.rowCount === 0) {
+          return res.status(404).json({ error: 'Note not found' });
+      }
+
+      res.sendStatus(204);  // No content to return, successful deletion
+  } catch (err) {
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

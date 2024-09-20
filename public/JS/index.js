@@ -11,6 +11,8 @@ $(document).ready(function () {
 
   // Login page
   function initLoginPage() {
+    localStorage.removeItem("token");
+
     $("body").empty(); // Clear the body
     $("body").append(`
             <div>
@@ -159,8 +161,7 @@ $(document).ready(function () {
               },
               error: function (xhr) {
                 alert(
-                  "Failed to add note: " +
-                    (xhr.responseJSON.error || "Unknown error")
+                  "Failed to add note "
                 );
               },
             });
@@ -173,6 +174,7 @@ $(document).ready(function () {
         $("#logout").click(function () {
           localStorage.removeItem("token");
           initLoginPage();
+          location.reload();
         });
       },
       error: function () {
@@ -182,15 +184,49 @@ $(document).ready(function () {
     });
   }
 
-  // Function to display the user's notes
   function displayNotes(notes) {
     $("#notesList").empty(); // Clear previous notes
+  
     if (notes.length > 0) {
+      // Append all notes
       notes.forEach(function (note, index) {
-        $("#notesList").append(`<p>${index + 1}: ${note.content}</p>`);
+        $("#notesList").append(`
+          <div id="note-${note.id}" class="noterow">
+            <p>${index + 1}: ${note.content}</p>
+            <button class="deleteNote" data-id="${note.id}">Delete</button>
+          </div>
+        `);
       });
     } else {
       $("#notesList").append("<p>No notes available.</p>");
     }
   }
+  
+  // Attach the delete event handler using event delegation
+  $(document).on("click", ".deleteNote", function () {
+    const noteId = $(this).data("id");
+    const token = localStorage.getItem("token");
+    if (noteId) {
+      $.ajax({
+        type: "DELETE",
+        url: `/notes/${noteId}`, // API endpoint to delete the note
+        headers: { Authorization: token },
+        success: function () {
+          // Remove the note from the DOM
+          $(`#note-${noteId}`).remove();
+        //   console.log(`Note ${noteId} deleted`);
+  
+          // Optionally re-fetch and re-display notes after deletion
+          initNotesPage();
+        },
+        error: function (xhr) {
+          alert(
+            "Failed to delete note"
+          );
+        },
+      });
+    }
+  });
+  
+  
 });
