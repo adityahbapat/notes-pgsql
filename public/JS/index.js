@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     $("body").empty(); // Clear the body
     $("body").append(`
-            <div class="login">
+            <div class="innerBox">
             <h2>Login</h2>
             <form id="loginForm">
                 <label for="email">Email:</label><br>
